@@ -372,7 +372,7 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full font-semibold py-2 px-6 rounded-lg hover:scale-102 transition duration-300 cursor-pointer ${
+                className={`w-full  py-3 px-6 btn-hidmona cursor-pointer ${
                   isLoading
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-primary-600 "

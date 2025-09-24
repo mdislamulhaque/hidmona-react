@@ -51,7 +51,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/signup"
-                className="bg-primary-600 hover:bg-primary-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="btn-hidmona text-white px-6 py-2  text-sm font-medium"
               >
                 Sign Up
               </Link>

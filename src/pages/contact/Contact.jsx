@@ -13,19 +13,37 @@ import useTitle from "../../hook/UseTitle";
 
 const Contact = () => {
   useTitle("Hidmona | Contact");
-  
-
- 
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-gradient-to-r from-primary-600 to-red-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
-          <p className="text-xl opacity-90">
-            We're here to help you with any questions or support you need
+      <section className="relative bg-hidmona-gradient text-white">
+        {/* Background overlay with pattern */}
+        <div className="absolute inset-0 bg-[url('/patterns/dots.svg')] bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-20 text-center">
+          <h1 className="text-4xl sm:text-5xl font-extrabold mb-6 tracking-tight">
+            Get in <span className="text-yellow-300">Touch</span>
+          </h1>
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto opacity-90 leading-relaxed">
+            We’re here to help you with any questions or support you need.
           </p>
+
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="#contact"
+              className="px-8 py-3 border border-white btn-hidmona"
+            >
+              Contact Us
+            </a>
+            <a
+              href="mailto:support@hidmona.ch"
+              className="px-8 py-3  border border-white  btn-hidmona"
+            >
+              Email Support
+            </a>
+          </div>
         </div>
       </section>
 
@@ -50,9 +68,9 @@ const Contact = () => {
                     <div>
                       <p className="font-medium text-gray-900">Address</p>
                       <p className="text-gray-600">
-                        123 Wall Street, Suite 1000
+                        Konradstrasse 75, 8005 Zürich
                         <br />
-                        New York, NY 10005
+                        Zürich Switzerland
                       </p>
                     </div>
                   </div>
@@ -63,7 +81,12 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">Phone</p>
-                      <p className="text-gray-600">+1 (555) 123-4567</p>
+                      <a
+                        href="tel:+41762320333"
+                        className="text-gray-600 inline-block cursor-pointer"
+                      >
+                        +41 76 232 03 33
+                      </a>
                     </div>
                   </div>
 
@@ -73,7 +96,12 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">Email</p>
-                      <p className="text-gray-600">support@swifttransfer.com</p>
+                      <a
+                        href="mailto:support@hidmona.ch"
+                        className="text-gray-600 inline-block cursor-pointer"
+                      >
+                        support@hidmona.ch
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -112,10 +140,10 @@ const Contact = () => {
 
                 <div className="mt-6 space-y-3">
                   <button className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                    Chat on WhatsApp
+                    <a href="https://wa.me/+41762320333" className="block"> Chat on WhatsApp</a>
                   </button>
                   <button className="w-full border border-primary-600 text-primary-600 hover:bg-red-50 font-medium py-2 px-4 rounded-lg transition-colors">
-                    Call Support
+                    <a href="tel:+41762320333" className="block">Call Support</a>
                   </button>
                 </div>
               </div>

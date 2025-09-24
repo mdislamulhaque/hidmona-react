@@ -47,7 +47,7 @@ const Login = () => {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
           <p className="mt-2 text-gray-600">
-            Sign in to your SwiftTransfer account
+            Sign in to your account
           </p>
         </div>
 
@@ -139,10 +139,10 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full font-semibold py-2 px-6 rounded-lg transition-colors ${
+              className={`w-full py-3 px-6  ${
                 isLoading
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-primary-600 hover:bg-primary-600 cursor-pointer"
+                  : "btn-hidmona cursor-pointer"
               } text-white`}
             >
               {isLoading ? "Signing In..." : "Sign In"}
@@ -167,7 +167,7 @@ const Login = () => {
           <div className="mt-6 text-center">
             <Link
               to="/signup"
-              className="font-medium text-primary-600 hover:text-primary-600 transition-colors"
+              className="btn-hidmona px-3 py-2"
             >
               Create a new account
             </Link>

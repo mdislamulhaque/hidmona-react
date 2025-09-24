@@ -70,7 +70,7 @@ export default function TransferForm() {
 
         <button
           type="submit"
-          className="w-full bg-primary-600 hover:bg-primary-600 hover:scale-105 duration-300 transition text-white font-semibold py-2 px-6 rounded-lg flex items-center justify-center space-x-2 text-lg cursor-pointer"
+          className="w-full btn-hidmona py-2 px-6  flex items-center justify-center space-x-2 text-lg cursor-pointer"
         >
           <span>Send Money</span>
           <ArrowRight className="h-6 w-6" />

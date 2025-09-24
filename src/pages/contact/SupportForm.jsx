@@ -21,7 +21,7 @@ export default function SupportForm() {
   };
 
   return (
-    <div className="w-full mx-auto bg-white p-8 rounded-lg shadow-md">
+    <div id="contact" className="w-full mx-auto bg-white p-8 rounded-lg shadow-md ">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Support Type */}
         <div>
@@ -121,7 +121,7 @@ export default function SupportForm() {
         {/* Submit */}
         <button
           type="submit"
-          className="bg-primary-600 hover:bg-primary-600 text-white font-medium px-6 py-3 rounded-lg transition duration-200"
+          className="btn-hidmona px-6 py-3 w-full"
         >
           Submit Now
         </button>

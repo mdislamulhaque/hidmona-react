@@ -101,16 +101,40 @@ const Location = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-gradient-to-r from-primary-600 to-red-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Our Global Offices</h1>
-          <p className="text-xl opacity-90">
-            Find a SwiftTransfer office near you for in-person support
+      {/* Contact CTA */}
+      <section className="relative py-20 bg-hidmona-gradient text-white overflow-hidden">
+        {/* Subtle pattern/overlay */}
+        <div className="absolute inset-0 bg-[url('/patterns/dots.svg')] bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+
+        <div className="relative max-w-4xl mx-auto px-6 sm:px-8 text-center">
+          <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 tracking-tight">
+            Need Help <span className="text-yellow-300">Finding Us?</span>
+          </h2>
+          <p className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto opacity-90 leading-relaxed">
+            Our customer support team is ready to assist you with directions and
+            office information.
           </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="tel:+41762320333"
+              className="group bg-white text-primary-600 font-semibold py-3 px-10 btn-hidmona 
+        shadow-lg hover:shadow-yellow-400/40 hover:bg-yellow-300 border-2 border-white 
+        transition duration-300"
+            >
+              📞 Call Us Now
+            </a>
+            <a
+              href="/contact"
+              className="group border-2 border-gray-300 font-semibold py-3 px-10  
+        hover:bg-white hover:text-primary-600 hover:shadow-lg transition duration-300 btn-hidmona hover:shadow-yellow-400/40"
+            >
+              ✉️ Contact Form
+            </a>
+          </div>
         </div>
       </section>
-
-     
 
       {/* Office Locations */}
       <section className="py-16 bg-gray-50">
@@ -128,7 +152,7 @@ const Location = () => {
             {offices.map((office) => (
               <div
                 key={office.id}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+                className="bg-transparent  rounded-tr-lg rounded-bl-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div>
@@ -169,38 +193,13 @@ const Location = () => {
                     href={`https://www.google.com/maps?q=${office.coordinates.lat},${office.coordinates.lng}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-block bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primaty-600 transition w-full text-center"
+                    className="mt-4 inline-block btn-hidmona text-sm  px-4 py-3 w-full text-center"
                   >
                     Get Directions
                   </a>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact CTA */}
-      <section className="py-16 bg-primary-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Need Help Finding Us?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Our customer support team is ready to assist you with directions and
-            office information.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <a
-              href="tel:+15551234567"
-              className="bg-white text-primary-600 hover:bg-gray-50 font-semibold py-3 px-8 rounded-lg transition-colors"
-            >
-              Call Us Now
-            </a>
-            <a
-              href="/contact"
-              className="border-2 border-white hover:bg-white hover:text-primary-600 font-semibold py-3 px-8 rounded-lg transition-colors"
-            >
-              Contact Form
-            </a>
           </div>
         </div>
       </section>

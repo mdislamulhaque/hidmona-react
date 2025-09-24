@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @theme {
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
@@ -11,4 +12,37 @@
   --color-primary-700: #1d4ed8;
   --color-primary-800: #1e40af;
   --color-primary-900: #1e3a8a;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+.bg-hidmona-gradient {
+  background: linear-gradient(
+    90deg,
+    #e84e3c 0%,    /* raw red */
+    #ed441a 50%,   /* medium red */
+    #be2312 100%   /* deep red */
+  );
+}
+
+.btn-hidmona {
+  background: linear-gradient(
+    90deg,
+    #e84e3c 0%,
+    #ed441a 50%,
+    #be2312 100%
+  );
+  color: #fff;
+  font-weight: 600;
+  border-top-right-radius: 1rem; /* 2xl */
+  border-bottom-left-radius: 1rem; /* 2xl */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-hidmona:hover {
+  border-top-left-radius: 1rem; /* 2xl */
+  border-bottom-right-radius: 1rem; /* 2xl */
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
