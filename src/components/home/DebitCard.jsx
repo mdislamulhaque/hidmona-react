@@ -8,7 +8,7 @@ export default function DebitCard() {
           {/* Empty space for offset (mimicking col-lg-8 offset-lg-4) */}
           <div className="w-full lg:w-2/4 text-center lg:text-left text-white z-40">
             <div className=" p-4 lg:p-8 text-center">
-              <h2 className="text-3xl font-medium py-3">
+              <h2 className=" text-xl md:text-3xl font-medium py-3">
                 Introducing Hidmona Debit Card
               </h2>
               <p className="text-lg py-2 ">
