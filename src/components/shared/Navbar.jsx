@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Menu, X, Zap } from "lucide-react";
+import LanguageToggle from "../../hook/LanguageToggle";
+import { FaEnvelope, FaWhatsapp } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,12 +22,12 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-             <img src="/logo/hidmon-log.png" alt=""  className="h-12"/>
+              <img src="/logo/hidmon-log.png" alt="" className="h-6 lg:h-12" />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -39,6 +41,7 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+
             <div className="flex items-center space-x-4">
               <Link
                 to="/login"
@@ -53,6 +56,25 @@ const Navbar = () => {
                 Sign Up
               </Link>
             </div>
+          </div>
+          {/* Controls */}
+          <div className="flex items-center space-x-4">
+            <a
+              href="https://wa.me/+41762320333"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-green-600 hover:text-green-800 text-xl"
+            >
+              <FaWhatsapp />
+            </a>
+            <a
+              href="mailto:support@hidmona.ch"
+              className="text-primary-600 hover:text-primary-600 text-xl"
+            >
+              <FaEnvelope />
+            </a>
+
+            <LanguageToggle />
           </div>
 
           {/* Mobile menu button */}
