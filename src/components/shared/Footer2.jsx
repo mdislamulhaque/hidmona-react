@@ -106,7 +106,7 @@ export default function Footer2() {
                   target="_blank"
                 >
                   <img
-                    src="/public/images/Download-Apple-Icon.png"
+                    src="/images/Download-Apple-Icon.png"
                     alt="App Store"
                     className=" h-12"
                   />
@@ -123,7 +123,7 @@ export default function Footer2() {
                   target="_blank"
                 >
                   <img
-                    src="/public/images/Download-Android-Icon.png"
+                    src="/images/Download-Android-Icon.png"
                     alt="Google Play"
                     className="h-12"
                   />
