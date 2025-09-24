@@ -6,6 +6,7 @@ import CardIssue from '../../components/home/CardIssue'
 import DebitCard from '../../components/home/DebitCard'
 import PromoCard from '../../components/home/PromoCard'
 import useTitle from '../../hook/UseTitle'
+import Services2 from '../../components/home/Services2'
 
 export default function Home() {
   useTitle("Hidmona | Home");
@@ -13,7 +14,8 @@ export default function Home() {
       <>
       <Slider />
       <Features />
-      <Services />
+      {/* <Services /> */}
+      <Services2/>
       <PromoCard/>
       <CardIssue />
       <DebitCard/>
