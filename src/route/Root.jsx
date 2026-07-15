@@ -6,6 +6,10 @@ import Contact from "../pages/contact/Contact";
 import Login from "../pages/login/Login";
 import SignUp from "../pages/signUp/SignUp";
 import OtpPage from "../pages/otp/OtpPage";
+import SendMoney from "../pages/dashboard/SendMoney";
+import Profile from "../pages/dashboard/Profile";
+import Transaction from "../pages/dashboard/Transaction";
+import DashboardLayout from "../layout/DashboardLayout";
 
 
 const router = createBrowserRouter([
@@ -40,6 +44,25 @@ const router = createBrowserRouter([
       {
         path: "/*",
         element: <h1>404 - Page Not Found</h1>,
+      },
+    ],
+  },
+
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <SendMoney/>
+      },
+      {
+        path: "profile",
+        element: <Profile/>
+      },
+      {
+        path: "transaction",
+        element: <Transaction />
       },
     ],
   },

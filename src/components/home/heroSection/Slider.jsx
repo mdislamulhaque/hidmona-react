@@ -51,8 +51,8 @@ export default function Slider() {
           <div className="absolute inset-0 bg-black/50"></div>
 
           {/* Text Overlay */}
-          <div className="absolute inset-0 flex items-center justify-end right-36 text-center text-white px-4">
-            <div className="max-w-3xl hidden md:block">
+          <div className="absolute inset-0 flex items-center justify-end right-6 text-center text-white px-4">
+            <div className="max-w-2xl hidden md:block">
               <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
                 {slides[currentSlide].title}
               </h1>
