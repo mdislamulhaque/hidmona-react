@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router"; // রাউট থেকে ডেটা রিসিভ করার জন্য
 import { ChevronDown } from "lucide-react";
 import Flag from "react-world-flags";
 
@@ -95,12 +96,38 @@ const FlagFormSelect = ({ label, countries, selectedCountry, onChange }) => {
   );
 };
 
-export default function TransferForm() {
-  const [fromCountry, setFromCountry] = useState(countries[0]); // Default Sweden
-  const [toCountry, setToCountry] = useState(countries[1]);   // Default Bangladesh
-  const [deliveryMethod, setDeliveryMethod] = useState(countries[1].supportedMethods[0].label);
+export default function TransferForm({ onNext }) {
+  const location = useLocation();
   
-  const [amount, setAmount] = useState(""); 
+  // হোম পেজ থেকে আসা ডেটা চেক করা হচ্ছে
+  const initialData = location.state?.initialFormData;
+
+  // ১. Sending From Country সেটআপ (হোম পেজ থেকে আসলে সেটি বসবে, নয়তো ডিফল্ট সুইডেন)
+  const [fromCountry, setFromCountry] = useState(() => {
+    if (initialData?.fromCountry) {
+      return countries.find(c => c.name === initialData.fromCountry) || countries[0];
+    }
+    return countries[0];
+  });
+
+  // ২. Receiving Country সেটআপ (হোম পেজ থেকে আসলে সেটি বসবে, নয়তো ডিফল্ট বাংলাদেশ)
+  const [toCountry, setToCountry] = useState(() => {
+    if (initialData?.toCountry) {
+      return countries.find(c => c.name === initialData.toCountry) || countries[1];
+    }
+    return countries[1];
+  });
+
+  // ৩. Delivery Method সেটআপ
+  const [deliveryMethod, setDeliveryMethod] = useState(() => {
+    return initialData?.deliveryMethod || countries[1].supportedMethods[0].label;
+  });
+  
+  // ৪. Amount সেটআপ (হোম পেজ থেকে অ্যামাউন্ট আসলে সেটি স্ট্রিং হয়ে বসবে)
+  const [amount, setAmount] = useState(() => {
+    return initialData?.sendingAmount ? initialData.sendingAmount.toString() : "";
+  });
+
   const [error, setError] = useState("");
   const [isCalculated, setIsCalculated] = useState(false); 
   const [liveRate, setLiveRate] = useState(null); 
@@ -118,7 +145,11 @@ export default function TransferForm() {
   // Receiving country পরিবর্তন হলে মেথড অটোমেটিক আপডেট হবে
   useEffect(() => {
     if (toCountry && toCountry.supportedMethods.length > 0) {
-      setDeliveryMethod(toCountry.supportedMethods[0].label);
+      // যদি হোম পেজ থেকে আসা মেথড টু-কান্ট্রি সাপোর্ট করে, তবে ওটাই থাকবে, নয়তো ১ম টি বসবে
+      const hasMatchingMethod = toCountry.supportedMethods.some(m => m.label === deliveryMethod);
+      if (!hasMatchingMethod) {
+        setDeliveryMethod(toCountry.supportedMethods[0].label);
+      }
     }
   }, [toCountry]);
 
@@ -151,7 +182,7 @@ export default function TransferForm() {
     fetchLiveRate();
   }, [fromCountry, toCountry]);
 
-  // রেট ক্যালকুলেশন
+  // রেট ক্যালকুলেশন লজিক
   const calculateRates = (sendingAmount, currentRate) => {
     const numAmount = parseFloat(sendingAmount);
     if (isNaN(numAmount) || numAmount <= 0 || !currentRate) {
@@ -182,7 +213,15 @@ export default function TransferForm() {
     }
   }, [amount, liveRate]);
 
-  // Submit Handler (যেটি মিসিং ছিল)
+  // ইনপুট অ্যামাউন্ট হ্যান্ডলার
+  const handleAmountChange = (e) => {
+    const value = e.target.value;
+    if (/^\d*\.?\d*$/.test(value)) {
+      setAmount(value);
+    }
+  };
+
+  // সাবমিট হ্যান্ডলার (প্যারেন্টে বা নেক্সট স্টেপে ডেটা পাঠানোর জন্য)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!amount) {
@@ -193,14 +232,21 @@ export default function TransferForm() {
       setError("From and To country cannot be the same.");
       return;
     }
-    alert(`Sending money via ${deliveryMethod} from ${fromCountry.name} to ${toCountry.name}`);
-  };
 
-  // Input Amount Handler (যেটি মিসিং ছিল)
-  const handleAmountChange = (e) => {
-    const value = e.target.value;
-    if (/^\d*\.?\d*$/.test(value)) {
-      setAmount(value);
+    const currentStepData = {
+      fromCountry: fromCountry.name,
+      fromCurrency: fromCountry.currency,
+      toCountry: toCountry.name,
+      toCurrency: toCountry.currency,
+      deliveryMethod: deliveryMethod,
+      sendingAmount: parseFloat(amount),
+      receivingAmount: calculations.theyWillReceiveLabel,
+      fee: calculations.transactionFee,
+      rate: calculations.marketFxRate
+    };
+
+    if (onNext) {
+      onNext(currentStepData);
     }
   };
 
@@ -312,10 +358,9 @@ export default function TransferForm() {
           <p className="text-red-500 text-xs font-medium text-center">{error}</p>
         )}
 
-        {/* Submit button */}
         <button
           type="submit"
-          className="w-full  btn-hidmona text-white font-medium py-3 px-6 flex items-center justify-center text-lg cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full btn-hidmona text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center text-lg cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!amount || parseFloat(amount) <= 0 || loading}
         >
           {loading ? "Fetching live rates..." : "Send Now"}

@@ -1,6 +1,6 @@
-// slider.jsx
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router"; // রাউটিং এর জন্য ইম্পোর্ট
 import TransferForm from "./TransferForm";
 
 const slides = [
@@ -23,6 +23,7 @@ const slides = [
 
 export default function Slider() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate(); // নেভিগেশন হুক
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -31,10 +32,16 @@ export default function Slider() {
     return () => clearInterval(timer);
   }, []);
 
+  // হোম পেজের ফর্ম সাবমিট হলে এই ফাংশনটি কাজ করবে
+  const handleHomeFormSubmit = (formData) => {
+    // সরাসরি ড্যাশবোর্ড রাউটে পাঠাবে এবং স্টেটের মাধ্যমে ডেটা সাথে নিয়ে যাবে
+    navigate("/dashboard", { state: { initialFormData: formData } });
+  };
+
   return (
     <section className="relative w-full min-h-screen lg:h-screen flex flex-col md:block overflow-hidden bg-gray-100">
       
-      {/* 1. Background Image Slider (For Tablet and Desktop) */}
+      {/* Background Image Slider (Desktop) */}
       <div className="absolute inset-0 hidden md:block">
         <AnimatePresence>
           <motion.div
@@ -55,7 +62,7 @@ export default function Slider() {
         </AnimatePresence>
       </div>
 
-      {/* 2. Mobile Banner (Top portion for small screens) */}
+      {/* Mobile Banner */}
       <div className="relative w-full h-[35vh] md:hidden">
         <img
           src={slides[currentSlide].image}
@@ -72,11 +79,10 @@ export default function Slider() {
         </div>
       </div>
 
-      {/* 3. Main Content Container (Text + Form) */}
-      {/* md স্ক্রিনে flex-row-reverse বা absolute grid দিয়ে মাঝখানে রাখা হয়েছে */}
+      {/* Main Content Container */}
       <div className="relative z-40 w-full h-full flex flex-col md:absolute md:inset-0 md:flex-row md:items-center md:justify-center lg:justify-between px-4 py-6 md:p-8 lg:px-16 xl:px-24">
         
-        {/* Left Side: Text Box (Hidden on MD, block on LG/XL with 50% width) */}
+        {/* Left Side: Text Box */}
         <div className="hidden lg:block lg:w-1/2 text-white pr-8 space-y-4">
           <AnimatePresence mode="wait">
             <motion.div
@@ -96,10 +102,9 @@ export default function Slider() {
           </AnimatePresence>
         </div>
 
-        {/* Right Side / Middle: Transfer Form Wrapper */}
-        {/* md: স্ক্রিনে একদম স্ক্রিনের মাঝখানে থাকবে, lg: স্ক্রিনে ডানপাশে 50% স্পেস নিবে */}
+        {/* Right Side: Transfer Form */}
         <div className="w-full md:w-[480px] lg:w-[500px] xl:w-[540px] flex justify-center lg:justify-end mx-auto lg:mx-0">
-          <TransferForm />
+          <TransferForm onNext={handleHomeFormSubmit} />
         </div>
 
       </div>
