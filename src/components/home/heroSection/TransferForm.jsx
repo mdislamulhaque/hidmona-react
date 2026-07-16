@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
-// You will need to install this library: npm install react-world-flags
+import { ChevronDown } from "lucide-react";
 import Flag from "react-world-flags";
 
-// ১. প্রতিটি দেশের সাথে তাদের নিজস্ব ডেলিভারি মেথড যুক্ত করা হয়েছে
 const countries = [
   { 
     name: "Sweden", 
@@ -58,20 +56,21 @@ const transactionFeeMap = {
   KES: 100.00
 };
 
+// Form Custom Selector Component
 const FlagFormSelect = ({ label, countries, selectedCountry, onChange }) => {
   return (
     <div className="relative border border-gray-300 rounded-lg px-4 py-2 flex items-center h-14">
-      <span className="absolute -top-3 left-4 bg-white px-2 text-sm text-gray-600">
+      <span className="absolute -top-3 left-4 bg-white px-2 text-xs text-gray-600">
         {label}
       </span>
       <div className="flex items-center flex-grow space-x-3">
         {selectedCountry ? (
           <>
             <Flag code={selectedCountry.code} className="h-6 w-8 rounded-sm object-cover" />
-            <span className="text-xl font-medium text-gray-900">{selectedCountry.name}</span>
+            <span className="text-lg font-medium text-gray-900">{selectedCountry.name}</span>
           </>
         ) : (
-          <span className="text-xl text-gray-400">Select a country</span>
+          <span className="text-lg text-gray-400">Select a country</span>
         )}
       </div>
       
@@ -99,8 +98,6 @@ const FlagFormSelect = ({ label, countries, selectedCountry, onChange }) => {
 export default function TransferForm() {
   const [fromCountry, setFromCountry] = useState(countries[0]); // Default Sweden
   const [toCountry, setToCountry] = useState(countries[1]);   // Default Bangladesh
-  
-  // ২. ডেলিভারি মেথড স্টেটটি dynamic করা হয়েছে (toCountry এর প্রথম মেথডটি ডিফল্ট হবে)
   const [deliveryMethod, setDeliveryMethod] = useState(countries[1].supportedMethods[0].label);
   
   const [amount, setAmount] = useState(""); 
@@ -118,7 +115,7 @@ export default function TransferForm() {
     theyWillReceiveLabel: ""
   });
 
-  // ৩. ইউজার যখনই receiving country পরিবর্তন করবে, তখন অটোমেটিক মেথড আপডেট হবে
+  // Receiving country পরিবর্তন হলে মেথড অটোমেটিক আপডেট হবে
   useEffect(() => {
     if (toCountry && toCountry.supportedMethods.length > 0) {
       setDeliveryMethod(toCountry.supportedMethods[0].label);
@@ -185,6 +182,7 @@ export default function TransferForm() {
     }
   }, [amount, liveRate]);
 
+  // Submit Handler (যেটি মিসিং ছিল)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!amount) {
@@ -198,6 +196,7 @@ export default function TransferForm() {
     alert(`Sending money via ${deliveryMethod} from ${fromCountry.name} to ${toCountry.name}`);
   };
 
+  // Input Amount Handler (যেটি মিসিং ছিল)
   const handleAmountChange = (e) => {
     const value = e.target.value;
     if (/^\d*\.?\d*$/.test(value)) {
@@ -206,11 +205,11 @@ export default function TransferForm() {
   };
 
   return (
-    <div className="absolute top-1/2 left-8 md:left-24 transform -translate-y-1/2 w-full md:w-[700px] bg-white p-6 md:p-8 rounded-2xl shadow-2xl z-40 border border-gray-150">
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
+    <div className="w-full bg-white p-5 md:p-6 rounded-2xl shadow-xl border border-gray-150">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
         
         {/* Row 1: Countries */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <FlagFormSelect
             label="Sending from"
             countries={countries}
@@ -225,18 +224,17 @@ export default function TransferForm() {
           />
         </div>
 
-        {/* Row 2: Delivery Method (Dynamic based on selected country) */}
+        {/* Row 2: Delivery Method */}
         <div className="relative border border-gray-300 rounded-lg px-4 py-2 h-14 flex items-center">
-          <span className="absolute -top-3 left-4 bg-white px-2 text-sm text-gray-600">
+          <span className="absolute -top-3 left-4 bg-white px-2 text-xs text-gray-600">
             Delivery Method
           </span>
-          <p className="text-xl font-medium text-gray-900 flex-grow">{deliveryMethod}</p>
+          <p className="text-lg font-medium text-gray-900 flex-grow">{deliveryMethod}</p>
           <select
             value={deliveryMethod}
             onChange={(e) => setDeliveryMethod(e.target.value)}
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           >
-            {/* ৪. এখানে শুধুমাত্র সিলেক্ট করা দেশের মেথডগুলোই লুপ হবে */}
             {toCountry?.supportedMethods?.map((method) => (
               <option key={method.id} value={method.label}>
                 {method.label}
@@ -247,37 +245,37 @@ export default function TransferForm() {
         </div>
 
         {/* Row 3: Amounts */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="relative border border-gray-300 rounded-lg px-4 py-2 flex items-center h-14">
-            <span className="absolute -top-3 left-4 bg-white px-2 text-sm text-gray-600">
+            <span className="absolute -top-3 left-4 bg-white px-2 text-xs text-gray-600">
               You will send
             </span>
             <div className="flex items-center flex-grow space-x-2">
               <Flag code={fromCountry?.code} className="h-5 w-7 rounded-sm object-cover" />
-              <span className="text-xl font-medium text-gray-600">{fromCountry?.currency}</span>
+              <span className="text-lg font-medium text-gray-600">{fromCountry?.currency}</span>
               <input
                 type="text"
                 value={amount}
                 placeholder="0.00"
                 onChange={handleAmountChange}
-                className="text-xl font-medium text-gray-900 flex-grow text-right pr-2 outline-none w-full"
+                className="text-lg font-medium text-gray-900 flex-grow text-right pr-2 outline-none w-full"
               />
             </div>
           </div>
           
           <div className="relative border border-gray-300 rounded-lg px-4 py-2 h-14 flex items-center bg-gray-50">
-            <span className="absolute -top-3 left-4 bg-white px-2 text-sm text-gray-600">
+            <span className="absolute -top-3 left-4 bg-white px-2 text-xs text-gray-600">
               Recipient will receive
             </span>
             <div className="flex items-center flex-grow space-x-2">
               <Flag code={toCountry?.code} className="h-5 w-7 rounded-sm object-cover" />
-              <span className="text-xl font-medium text-gray-600">{toCountry?.currency}</span>
+              <span className="text-lg font-medium text-gray-600">{toCountry?.currency}</span>
               <input
                 type="text"
                 value={isCalculated ? calculations.theyWillReceiveLabel.split(" ")[0] : ""}
                 disabled
-                placeholder={loading ? "Loading rate..." : "0.00"}
-                className="text-xl font-medium text-gray-900 flex-grow text-right outline-none w-full disabled:bg-gray-50"
+                placeholder={loading ? "Loading..." : "0.00"}
+                className="text-lg font-medium text-gray-900 flex-grow text-right outline-none w-full disabled:bg-gray-50"
               />
             </div>
           </div>
@@ -285,7 +283,7 @@ export default function TransferForm() {
 
         {/* Calculations Box */}
         {isCalculated && !loading && (
-          <div className="p-5 border border-gray-300 rounded-xl bg-white space-y-3 text-lg text-gray-900 font-sans">
+          <div className="p-4 border border-gray-300 rounded-xl bg-white space-y-2 text-sm text-gray-900 font-sans">
             <div className="flex justify-between items-center">
               <span className="text-gray-700">Our rate:</span>
               <span className="font-medium text-gray-900">{calculations.ourRateLabel}</span>
@@ -298,25 +296,26 @@ export default function TransferForm() {
               <span className="text-gray-700">Market FX:</span>
               <span className="font-medium text-gray-900">{calculations.marketFXLabel}</span>
             </div>
-            <div className="flex justify-between items-center pt-1">
+            <hr className="border-gray-200 my-1" />
+            <div className="flex justify-between items-center">
               <span className="text-gray-700">You'll be sending</span>
               <span className="font-medium text-gray-900">{calculations.youBeSending}</span>
             </div>
-            <div className="flex justify-between items-center pt-1">
+            <div className="flex justify-between items-center">
               <span className="text-gray-700">They will receive</span>
-              <span className="font-semibold text-xl text-gray-900">{calculations.theyWillReceiveLabel}</span>
+              <span className="font-semibold text-lg text-gray-900">{calculations.theyWillReceiveLabel}</span>
             </div>
           </div>
         )}
 
         {error && (
-          <p className="text-red-500 text-sm font-medium text-center">{error}</p>
+          <p className="text-red-500 text-xs font-medium text-center">{error}</p>
         )}
 
         {/* Submit button */}
         <button
           type="submit"
-          className="w-full bg-[#e89a14] hover:bg-[#d68c0f] text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center text-xl cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full  btn-hidmona text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center text-lg cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!amount || parseFloat(amount) <= 0 || loading}
         >
           {loading ? "Fetching live rates..." : "Send Now"}
