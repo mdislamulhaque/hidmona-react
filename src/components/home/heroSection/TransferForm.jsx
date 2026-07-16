@@ -315,7 +315,7 @@ export default function TransferForm() {
         {/* Submit button */}
         <button
           type="submit"
-          className="w-full  btn-hidmona text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center text-lg cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full  btn-hidmona text-white font-medium py-3 px-6 flex items-center justify-center text-lg cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!amount || parseFloat(amount) <= 0 || loading}
         >
           {loading ? "Fetching live rates..." : "Send Now"}
